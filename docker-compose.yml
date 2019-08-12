@@ -2,7 +2,7 @@ version: '2'
 services:
 
   buildbot:
-    image: buildbot/buildbot-master:latest
+    image: buildbot/buildbot-master:master
     env_file: db.env
     environment:
         - BUILDBOT_CONFIG_DIR=config
@@ -10,6 +10,9 @@ services:
         - BUILDBOT_WORKER_PORT=9989
         - BUILDBOT_WEB_URL=http://localhost:8080/
         - BUILDBOT_WEB_PORT=8080
+        - WEB_AUTHS=test:test
+        - WORKERS=kernelci:pass
+        - BUILDBOT_STATUS_TOKEN=example
         - TCP_PORTS=8080,9989
     links:
       - db
@@ -18,17 +21,17 @@ services:
         - 9989
 
   db:
-    image: "postgres:9.4"
+    image: "postgres:11.4-alpine"
     env_file: db.env
     expose:
         - 5432
 
   worker:
-    image: "buildbot/buildbot-worker:master"
+    image: buildbot/buildbot-worker:master
     environment:
         BUILDMASTER: buildbot
         BUILDMASTER_PORT: 9989
-        WORKERNAME: example-worker
+        WORKERNAME: kernelci
         WORKERPASS: pass
         WORKER_ENVIRONMENT_BLACKLIST: DOCKER_BUILDBOT* BUILDBOT_ENV_* BUILDBOT_1* WORKER_ENVIRONMENT_BLACKLIST
 
