@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 services:
 
   buildbot:
@@ -6,25 +6,36 @@ services:
     env_file: db.env
     environment:
         - BUILDBOT_CONFIG_DIR=config
-        - BUILDBOT_CONFIG_URL=https://github.com/gentoo/Gentoo_kernelCI/archive/master.tar.gz
+        - BUILDBOT_CONFIG_URL=https://github.com/aliceinwire/GKernelCI/archive/master.tar.gz
         - BUILDBOT_WORKER_PORT=9989
-        - BUILDBOT_WEB_URL=http://localhost:8080/
-        - BUILDBOT_WEB_PORT=8080
-        - WEB_AUTHS=test:test
+        - BUILDBOT_WEB_URL=https://kernel1.amd64.dev.gentoo.org
+        - BUILDBOT_WEB_PORT=8010
+        - WEB_AUTHS=demo:demo
         - WORKERS=kernelci:pass
         - BUILDBOT_STATUS_TOKEN=example
-        - TCP_PORTS=8080,9989
+        - TCP_PORTS=8010,9989
+        - VIRTUAL_HOST=kernel1.amd64.dev.gentoo.org
+        - VIRTUAL_PORT=8010
+        - LETSENCRYPT_HOST=kernel1.amd64.dev.gentoo.org
+        - LETSENCRYPT_EMAIL=example@example.org
     links:
       - db
     expose:
-        - 8080
+        - 8010
         - 9989
+    networks:
+      - proxy-tier
+
 
   db:
     image: "postgres:11.4-alpine"
     env_file: db.env
     expose:
         - 5432
+    volumes:
+        - postgres_data:/var/lib/postgresql/data
+    networks:
+      - proxy-tier
 
   worker:
     image: buildbot/buildbot-worker:master
@@ -34,6 +45,46 @@ services:
         WORKERNAME: kernelci
         WORKERPASS: pass
         WORKER_ENVIRONMENT_BLACKLIST: DOCKER_BUILDBOT* BUILDBOT_ENV_* BUILDBOT_1* WORKER_ENVIRONMENT_BLACKLIST
+    networks:
+      - proxy-tier
 
-    links:
-        - buildbot
+  proxy:
+    build: ./proxy
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+    labels:
+      com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy: "true"
+    volumes:
+      - certs:/etc/nginx/certs:ro
+      - vhost.d:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    networks:
+      - proxy-tier
+
+  letsencrypt-companion:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    restart: always
+    volumes:
+      - certs:/etc/nginx/certs
+      - vhost.d:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - proxy-tier
+    depends_on:
+      - proxy
+
+volumes:
+  db:
+  certs:
+  vhost.d:
+  html:
+  postgres_data:
+
+networks:
+  proxy-tier:
+    external:
+      name: nginx-proxy
