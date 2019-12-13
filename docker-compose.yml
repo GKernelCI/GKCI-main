@@ -3,7 +3,7 @@ services:
 
   buildbot:
     image: gkernelci/buildbot-master:master
-    build: .
+    build: gkernelci-master
     env_file: db.env
     environment:
         - BUILDBOT_CONFIG_DIR=config
