@@ -1,0 +1,3 @@
+[submodule "Gfileserver"]
+	path = Gfileserver
+	url = git@github.com:GKernelCI/Gfileserver.git
