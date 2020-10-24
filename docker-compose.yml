@@ -2,44 +2,61 @@ version: '3'
 services:
 
   buildbot:
-    image: gkernelci/buildbot-master:master
-    build: gkernelci-master
+    build: GBuildbot-master
     env_file: db.env
     environment:
         - BUILDBOT_CONFIG_DIR=config
-        - BUILDBOT_CONFIG_URL=https://github.com/aliceinwire/GKernelCI/archive/master.tar.gz
+        - BUILDBOT_CONFIG_URL=https://github.com/GKernelCI/GBuildbot/archive/divide_master.tar.gz
         - BUILDBOT_WORKER_PORT=9989
         - BUILDBOT_WEB_URL=https://kernel1.amd64.dev.gentoo.org
         - BUILDBOT_WEB_PORT=8010
+        - WWW_AUTH_USER=demo
+        - WWW_AUTH_PASWD=demo
+        - GKERNELCI_URL=https://kernel1.amd64.dev.gentoo.org/
+        - GKERNELCI_TITLE_URL=https://wiki.gentoo.org/wiki/Project:Kernel
+        - GKERNELCI_TITLE=Gentoo Kernel
+        - MAIL_PASSWORD=none
+        - WORKER_NAME=worker0
+        - WORKER_PASSWORD=fzF#vHX!74eB
         - WEB_AUTHS=demo:demo
         - WORKERS=kernelci:pass
         - BUILDBOT_STATUS_TOKEN=example
         - TCP_PORTS=8010,9989
+    depends_on:
+      - db
     links:
       - db
+    ports:
+      - 8010:8010
     expose:
-        - 8010
-        - 9989
+      - 9989
+    networks:
+      - gkernelci-net
+
 
 
   db:
     image: "postgres:11.4-alpine"
     env_file: db.env
     expose:
-        - 5432
+      - 5432
     volumes:
-        - postgres_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - gkernelci-net
 
   worker:
     image: buildbot/buildbot-worker:master
     environment:
         BUILDMASTER: buildbot
         BUILDMASTER_PORT: 9989
-        WORKERNAME: kernelci
-        WORKERPASS: pass
+        WORKERNAME: worker0
+        WORKERPASS: fzF#vHX!74eB
         WORKER_ENVIRONMENT_BLACKLIST: DOCKER_BUILDBOT* BUILDBOT_ENV_* BUILDBOT_1* WORKER_ENVIRONMENT_BLACKLIST
     volumes:
       - fileserver:/var/www/fileserver
+    networks:
+      - gkernelci-net
 
   fileserver:
     build: ./Gfileserver
@@ -47,6 +64,8 @@ services:
       - 8080:8080
     volumes:
       - fileserver:/var/www/static
+    networks:
+      - gkernelci-net
 
 volumes:
   db:
@@ -55,3 +74,6 @@ volumes:
   html:
   postgres_data:
   fileserver:
+
+networks:
+  gkernelci-net:

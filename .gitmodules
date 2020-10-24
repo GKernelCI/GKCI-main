@@ -1,3 +1,6 @@
 [submodule "Gfileserver"]
 	path = Gfileserver
-	url = git@github.com:GKernelCI/Gfileserver.git
+	url = https://github.com/GKernelCI/Gfileserver
+[submodule "GBuildbot-master"]
+	path = GBuildbot-master
+	url = https://github.com/GKernelCI/GBuildbot-master
