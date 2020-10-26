@@ -1,39 +1,36 @@
 # GkernelCI_docker
 GkernelCI docker environment
 
-[![Build Status](https://travis-ci.org/aliceinwire/Gentoo_kernelCI.svg?branch=master)](https://travis-ci.org/aliceinwire/Gentoo_kernelCI)
-
-## quick start
-
-GKernelCI is currently working with [docker-compose](https://github.com/aliceinwire/GkernelCI_docker)
+## Quick start
 
 Clone GKernelCI_docker repository  
-`git clone https://github.com/aliceinwire/GkernelCI_docker`  
+`git clone --recursive https://github.com/GKernelCI/Gdocker.git`  
 Change the *docker-compose.yml* and start docker-compose   
 `docker-compose up -d`
 
-## Gentoo kernel stabilization
+## Todo
 
-### how Gentoo kernel stabilization work
-```
-Kernel ebuilds referenced in the Handbook have certain exemptions from the usual stabilization policy, so stabilization requests are normally only filed for the first version in a long term stable branch (subsequent versions can be stabilized at the discretion of the maintainer).
+diagram:
+![GKernelCI_V2](https://user-images.githubusercontent.com/107572/91367559-c68eff80-e841-11ea-9e51-2766ba838f2f.png)
 
-First, test all available kernel options:
-user $cd /usr/src/example-sources-1.2.3
-user $make allyesconfig
-user $make # add '-j' as appropriate for the hardware
+- [x] Divide GBuildbot
+- [x] Make Gdocker start by `docker-compose up -d`
+- [x] Gdocker have tyrian-theme
+- [x] Move all the scripts parts to Ghelper
+- [ ] Clean old builder configuration
+- [ ] Create building factory
+- [ ] Make lava testing script from Gbuildbot
+- [ ] lava can boot a gentoo testing artifact
+- [ ] Creating Gentoo rootfs weekly from buildbot worker
+- [ ] lava can boot the created rootfs
+- [ ] send email notifications
+- [ ] Add lava test other than boot
+- [ ] Encrypt secrets with blackbox
+- [ ] Create kernel overlay 
+- [ ] start to stabilize on kernel overlay
+- [ ] send livepatch pull request and commits
 
-If that succeeds, build with a normal kernel configuration:
-user $make distclean
-user $make menuconfig
-user $make
-user $make modules_install # if you use modules
-
-After reboot, check dmesg for anything strange and use the system as normal, trying to get a bit of uptime.
-
-If stabilizing a special feature variant, try to test relevant features. 
-```
-## Code
+## Contribute
 Any contribute is welcome
 
-Please check the [issues](https://github.com/aliceinwire/GkernelCI_docker/issues) for contributing
+Please check the [issues](https://github.com/GKernelCI/Gdocker/issues) for contributing
