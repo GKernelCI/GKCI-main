@@ -46,7 +46,12 @@ services:
       - gkernelci-net
 
   worker:
-    image: buildbot/buildbot-worker:master
+    build: 
+        context: ./GBuildbot-worker
+        args:
+          LAVA_SERVER: lava_server:lava_port
+          LAVA_TOKEN: lava_token
+          LAVA_USER: lava_user
     environment:
         BUILDMASTER: buildbot
         BUILDMASTER_PORT: 9989

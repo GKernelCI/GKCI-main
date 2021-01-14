@@ -4,3 +4,6 @@
 [submodule "GBuildbot-master"]
 	path = GBuildbot-master
 	url = https://github.com/GKernelCI/GBuildbot-master
+[submodule "GBuildbot-worker"]
+	path = GBuildbot-worker
+	url = https://github.com/GKernelCI/GBuildbot-worker.git
