@@ -6,7 +6,7 @@ services:
     env_file: db.env
     environment:
         - BUILDBOT_CONFIG_DIR=config
-        - BUILDBOT_CONFIG_URL=https://github.com/GKernelCI/GBuildbot/archive/divide_master.tar.gz
+        - BUILDBOT_CONFIG_URL=https://github.com/GKernelCI/GBuildbot/archive/master.tar.gz
         - BUILDBOT_WORKER_PORT=9989
         - BUILDBOT_WEB_URL=https://kernel1.amd64.dev.gentoo.org
         - BUILDBOT_WEB_PORT=8010
