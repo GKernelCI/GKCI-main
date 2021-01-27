@@ -14,6 +14,6 @@ diagram:
 ![GKernelCI_V2](https://user-images.githubusercontent.com/107572/91367559-c68eff80-e841-11ea-9e51-2766ba838f2f.png)
 
 ## Contribute
-Any contribute is welcome
+Any contributions are welcome
 
 Please check the [issues](https://github.com/GKernelCI/Gdocker/issues) for contributing
