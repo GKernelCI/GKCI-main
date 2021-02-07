@@ -63,6 +63,7 @@ services:
     volumes:
       - fileserver:/var/www/fileserver
       - worker_data:/buildbot
+      - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - gkernelci-net
 
