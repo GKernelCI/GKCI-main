@@ -1,6 +1,8 @@
 # GkernelCI_docker
 GkernelCI docker environment
 
+[![Build Status](https://travis-ci.com/GKernelCI/GDocker.svg?branch=master)](https://travis-ci.com/GKernelCI/GDocker)
+
 ## Quick start
 
 Clone GKernelCI_docker repository  
