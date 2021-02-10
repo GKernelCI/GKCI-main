@@ -9,20 +9,19 @@ services:
         - BUILDBOT_CONFIG_URL=https://github.com/GKernelCI/GBuildbot/archive/master.tar.gz
         - BUILDBOT_WORKER_PORT=9989
         - BUILDBOT_WEB_URL=https://kernel1.amd64.dev.gentoo.org
-        - BUILDBOT_WEB_PORT=8010
-        - WWW_AUTH_USER=demo
-        - WWW_AUTH_PASWD=demo
+        - WWW_AUTH_USER=web_auth_user
+        - WWW_AUTH_PASWD=web_auth_password
         - GKERNELCI_URL=https://kernel1.amd64.dev.gentoo.org/
         - GKERNELCI_TITLE_URL=https://wiki.gentoo.org/wiki/Project:Kernel
         - GKERNELCI_TITLE=Gentoo Kernel
         - GHELPER_REPOURL=https://github.com/GKernelCI/Ghelper.git
         - GHELPER_BRANCH=master
-        - MAIL_PASSWORD=none
-        - WORKER_NAME=worker0
-        - WORKER_PASSWORD=fzF#vHX!74eB
-        - WEB_AUTHS=demo:demo
+        - MAIL_PASSWORD=mail_password
+        - WORKER_NAME=worker_name
+        - WORKER_PASSWORD=worker_pass
+        - WEB_AUTHS=web_auth_user:web_auth_password
         - WORKERS=kernelci:pass
-        - BUILDBOT_STATUS_TOKEN=example
+        - BUILDBOT_STATUS_TOKEN=gentoo_webhook
         - TCP_PORTS=8010,9989
     depends_on:
       - db
@@ -55,10 +54,10 @@ services:
           LAVA_TOKEN: lava_token
           LAVA_USER: lava_user
     environment:
-        BUILDMASTER: buildbot
-        BUILDMASTER_PORT: 9989
-        WORKERNAME: worker0
-        WORKERPASS: fzF#vHX!74eB
+        BUILDMASTER: master_ip
+        BUILDMASTER_PORT: master_port
+        WORKERNAME: worker_name
+        WORKERPASS: worker_pass
         WORKER_ENVIRONMENT_BLACKLIST: DOCKER_BUILDBOT* BUILDBOT_ENV_* BUILDBOT_1* WORKER_ENVIRONMENT_BLACKLIST
     volumes:
       - fileserver:/var/www/fileserver
