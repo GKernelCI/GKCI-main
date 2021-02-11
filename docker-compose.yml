@@ -19,6 +19,9 @@ services:
         - MAIL_PASSWORD=mail_password
         - WORKER_NAME=worker_name
         - WORKER_PASSWORD=worker_pass
+        - IRC_HOST=irc_host
+        - IRC_CHANNELS=irc_channels
+        - IRC_NICK=irc_nick
         - WEB_AUTHS=web_auth_user:web_auth_password
         - WORKERS=kernelci:pass
         - BUILDBOT_STATUS_TOKEN=gentoo_webhook
