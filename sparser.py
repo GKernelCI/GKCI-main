@@ -26,7 +26,7 @@ def secrets_file():
         return cfg
 
 def input_file():
-    with open("docker-compose.yml", "r") as inputfile:
+    with open("docker-compose.yml.template", "r") as inputfile:
         inf = inputfile.read()
     return inf
     
