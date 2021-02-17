@@ -70,13 +70,21 @@ services:
       - gkernelci-net
 
   fileserver:
-    build: ./Gfileserver
+    build:
+      context: ./Gfileserver/web/
     ports:
       - 8080:8080
     volumes:
       - fileserver:/var/www/static
     networks:
       - gkernelci-net
+
+  cron:
+    build:
+      context: ./Gfileserver/cron/
+    volumes:
+      - fileserver:/var/www/static
+    restart: always
 
 volumes:
   db:
