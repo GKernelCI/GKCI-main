@@ -18,11 +18,11 @@ def generate_password(password_length):
 def secrets_file():
     if os.path.isfile('./secrets.yml'):
         with open("secrets.yml", "r") as ymlfile:
-            cfg = yaml.load(ymlfile)
+            cfg = yaml.safe_load(ymlfile)
         return cfg
     else:
         with open("secrets.yml.example", "r") as ymlfile:
-            cfg = yaml.load(ymlfile)
+            cfg = yaml.safe_load(ymlfile)
         return cfg
 
 def input_file():
