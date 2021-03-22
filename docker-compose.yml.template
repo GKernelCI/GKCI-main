@@ -56,6 +56,7 @@ services:
           LAVA_SERVER: lava_server:lava_port
           LAVA_TOKEN: lava_token
           LAVA_USER: lava_user
+          DOCKER_GID: your local docker GID
     environment:
         BUILDMASTER: master_ip
         BUILDMASTER_PORT: master_port
