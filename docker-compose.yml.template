@@ -26,6 +26,7 @@ services:
         - WORKERS=kernelci:pass
         - BUILDBOT_STATUS_TOKEN=gentoo_webhook
         - TCP_PORTS=8010,9989
+        - PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION=python
     depends_on:
       - db
     links:
@@ -63,6 +64,7 @@ services:
         WORKERNAME: worker_name
         WORKERPASS: worker_pass
         WORKER_ENVIRONMENT_BLACKLIST: DOCKER_BUILDBOT* BUILDBOT_ENV_* BUILDBOT_1* WORKER_ENVIRONMENT_BLACKLIST
+        PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: python
     volumes:
       - fileserver:/var/www/fileserver
       - worker_data:/buildbot
